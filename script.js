@@ -1,7 +1,10 @@
-// Assignment Code
+// Global arrays
+var lowercaseCharacters = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+var uppercaseCharacters = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+var numberCharacters = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+var specialCharacters = [ '!', '”', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~'];
+
 var generateBtn = document.querySelector("#generate");
-
-
 
 function generatePassword() {
   var passwordLength = window.prompt('\nHow long would you like your password to be? \n\nPlease select a number between 8 and 128.\n');
@@ -23,15 +26,11 @@ function generatePassword() {
   }
 
   // Run through character types
+  
   var passwordLowercase = window.confirm('\nWould you like lowercase characters in your password?\n');
   var passwordUppercase = window.confirm('\nWould you like UPPERCASE characters in your password?\n');
   var passwordNumeric = window.confirm('\nHow about some numbers in your password?\n');
   var passwordSpecial = window.confirm('\nFinally, would you like special characters in your password?\n');
-
-  // console.log(passwordLowercase);
-  // console.log(passwordUppercase);
-  // console.log(passwordNumeric);
-  // console.log(passwordSpecial);
 
   if (
     (passwordLowercase === false) && 
@@ -43,23 +42,38 @@ function generatePassword() {
   };
 
   // Generate password 
-
-  // Code that checks what criteria was selected and generates a random order
-  // Which ones are true??
   
+  //Array to store types of characters to include in password
+  var possibleCharacters = [''];
 
+  if (passwordLowercase) {
+    possibleCharacters += lowercaseCharacters;
+  };
 
+  if (passwordUppercase) {
+    //Not sure if I need to include the first part of the concatination for the random calc, needed it for the console log tho...
+    possibleCharacters += (',' + uppercaseCharacters);
+  }; 
 
-  for(var i=1; i <= passwordLength; i++) {
-    // This statement will run each time the loop is executed
-    console.log('');
-  }
+  if (passwordNumeric) {
+    possibleCharacters += (',' + numberCharacters);
+  };
 
-  // Code that assigns values to their respective value
+  if (passwordSpecial) {
+    possibleCharacters += (',' + specialCharacters);
+  };
 
-  // return passwordCharaters.join('');
+  console.log(possibleCharacters)
+
+  //Randomize
+  var guaranteedCharacters = [''];
+
+  for (var i = 0; i < passwordLength; i++) { 
+    var guaranteedCharacters = Math.floor(Math.random() * possibleCharacters.length);
+}
+
+  return guaranteedCharacters;
 };
-
 
 // Write password to the #password input
 function writePassword() {
@@ -72,3 +86,43 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+
+
+
+
+//  if (passwordLowercase) {
+//    possibleCharacters = possibleCharacters.concat(lowercaseCharacters);
+//    guaranteedCharacters.push(
+//      lowercaseCharacters[
+//        Math.floor(Math.random() * lowercaseCharacters.length)
+//      ]
+//    );
+//  }
+
+//  if (passwordUppercase) {
+//    possibleCharacters = possibleCharacters.concat(uppercaseCharacters);
+//    guaranteedCharacters.push(
+//      uppercaseCharacters[
+//        Math.floor(Math.random() * uppercaseCharacters.length)
+//      ]
+//    );
+//  }
+
+//  if (passwordNumeric) {
+//    possibleCharacters = possibleCharacters.concat(passwordNumeric);
+//    guaranteedCharacters.push(
+//      passwordNumeric[
+//        Math.floor(Math.random() * passwordNumeric.length)
+//      ]
+//    );
+//  }
+
+//  if (passwordSpecial) {
+//    possibleCharacters = possibleCharacters.concat(passwordSpecial);
+//    guaranteedCharacters.push(
+//      passwordSpecial[
+//        Math.floor(Math.random() * passwordSpecial.length)
+//      ]
+//    );
+//  }
+
