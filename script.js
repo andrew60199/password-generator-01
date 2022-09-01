@@ -4,8 +4,16 @@ var uppercaseCharacters = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K
 var numberCharacters = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 var specialCharacters = [ '!', '”', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~'];
 
+// Had to join these arrays otherwise the commas would show up in the final answer.
+var lowercaseCharactersJoined = lowercaseCharacters.join('');
+var uppercaseCharactersJoined = uppercaseCharacters.join('');
+var numberCharactersJoined = numberCharacters.join('');
+var specialCharactersJoined = specialCharacters.join('');
+
+// Used to select the button
 var generateBtn = document.querySelector("#generate");
 
+// Where the magic happens...
 function generatePassword() {
   var passwordLength = window.prompt('\nHow long would you like your password to be? \n\nPlease select a number between 8 and 128.\n');
 
@@ -26,7 +34,6 @@ function generatePassword() {
   }
 
   // Run through character types
-  
   var passwordLowercase = window.confirm('\nWould you like lowercase characters in your password?\n');
   var passwordUppercase = window.confirm('\nWould you like UPPERCASE characters in your password?\n');
   var passwordNumeric = window.confirm('\nHow about some numbers in your password?\n');
@@ -41,38 +48,37 @@ function generatePassword() {
     window.alert('\nOh no, you\'ll need to select at least one character type to continue. Please try again\n')
   };
 
-  // Generate password 
-  
-  //Array to store types of characters to include in password
+  // Array to store the characters types the user wants within their password
   var possibleCharacters = [''];
 
   if (passwordLowercase) {
-    possibleCharacters += lowercaseCharacters;
+    possibleCharacters += lowercaseCharactersJoined;
   };
 
   if (passwordUppercase) {
-    //Not sure if I need to include the first part of the concatination for the random calc, needed it for the console log tho...
-    possibleCharacters += (',' + uppercaseCharacters);
+    possibleCharacters += uppercaseCharactersJoined;
   }; 
 
   if (passwordNumeric) {
-    possibleCharacters += (',' + numberCharacters);
+    possibleCharacters += numberCharactersJoined;
   };
 
   if (passwordSpecial) {
-    possibleCharacters += (',' + specialCharacters);
+    possibleCharacters += specialCharactersJoined;
   };
-
-  console.log(possibleCharacters)
+ 
+  // Use this to check what is being selected
+  // console.log(possibleCharacters);
 
   //Randomize
   var guaranteedCharacters = [''];
-
   for (var i = 0; i < passwordLength; i++) { 
-    var guaranteedCharacters = Math.floor(Math.random() * possibleCharacters.length);
-}
+    var index = Math.floor(Math.random() * possibleCharacters.length);
+    guaranteedCharacters.push(possibleCharacters[index]);
+  }
 
-  return guaranteedCharacters;
+  // Use .join('') to join the randomised characters together into one string. 
+  return guaranteedCharacters.join('');
 };
 
 // Write password to the #password input
@@ -86,43 +92,3 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
-
-
-
-//  if (passwordLowercase) {
-//    possibleCharacters = possibleCharacters.concat(lowercaseCharacters);
-//    guaranteedCharacters.push(
-//      lowercaseCharacters[
-//        Math.floor(Math.random() * lowercaseCharacters.length)
-//      ]
-//    );
-//  }
-
-//  if (passwordUppercase) {
-//    possibleCharacters = possibleCharacters.concat(uppercaseCharacters);
-//    guaranteedCharacters.push(
-//      uppercaseCharacters[
-//        Math.floor(Math.random() * uppercaseCharacters.length)
-//      ]
-//    );
-//  }
-
-//  if (passwordNumeric) {
-//    possibleCharacters = possibleCharacters.concat(passwordNumeric);
-//    guaranteedCharacters.push(
-//      passwordNumeric[
-//        Math.floor(Math.random() * passwordNumeric.length)
-//      ]
-//    );
-//  }
-
-//  if (passwordSpecial) {
-//    possibleCharacters = possibleCharacters.concat(passwordSpecial);
-//    guaranteedCharacters.push(
-//      passwordSpecial[
-//        Math.floor(Math.random() * passwordSpecial.length)
-//      ]
-//    );
-//  }
-
